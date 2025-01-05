@@ -10,4 +10,5 @@ class profile::base {
   include profile::base::ssh
   include profile::base::firewall
   include profile::base::fail2ban
+  include profile::prometheus::node_exporter
 }
