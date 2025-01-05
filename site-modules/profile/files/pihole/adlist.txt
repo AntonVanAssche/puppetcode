@@ -1,0 +1,6 @@
+[0] Downloading 'https://github.com/AntonVanAssche/homelab-automation/raw/refs/heads/master/adlist/adlist.txt' ...
+HTTP response 302  [https://github.com/AntonVanAssche/homelab-automation/raw/refs/heads/master/adlist/adlist.txt]
+Adding URL: https://raw.githubusercontent.com/AntonVanAssche/homelab-automation/refs/heads/master/adlist/adlist.txt
+[0] Downloading 'https://raw.githubusercontent.com/AntonVanAssche/homelab-automation/refs/heads/master/adlist/adlist.txt' ...
+Saving 'adlist.txt'
+HTTP response 200  [https://raw.githubusercontent.com/AntonVanAssche/homelab-automation/refs/heads/master/adlist/adlist.txt]

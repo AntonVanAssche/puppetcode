@@ -361,3 +361,9 @@ profile::emby::port: '8096'
 profile::emby::protocol: 'tcp'
 profile::emby::uid: 994
 profile::emby::gid: 991
+
+profile::pihole::registry: 'docker.io'
+profile::pihole::image: 'pihole/pihole'
+profile::pihole::volumes:
+  '/etc/pihole': '/var/lib/podman/volumes/configs/pihole'
+  '/etc/dnsmasq.d': '/var/lib/podman/volumes/configs/dnsmasq.d'
