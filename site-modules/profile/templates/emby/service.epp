@@ -1,0 +1,32 @@
+[Unit]
+Description=Emby Server
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/container-emby.pid %t/container-emby.ctr-id
+ExecStart=/usr/bin/podman run \
+  --conmon-pidfile %t/container-emby.pid \
+  --cidfile %t/container-emby.ctr-id \
+  --cgroups=no-conmon \
+  --replace -d \
+  --name emby \
+  --env UID=<%= $profile::emby::uid %> \
+  --env GID=<%= $profile::emby::gid %> \
+  --env TZ=Europe/Brussels \
+<% $profile::emby::volumes.each |$_container_path, $_host_path| { -%>
+  --volume=<%= $_host_path %>:<%= $_container_path %>:Z \
+<% } -%>
+  --publish=<%= $profile::emby::port %>:<%= $profile::emby::port %>/<%= $profile::emby::protocol %> \
+  --device /dev/vchiq:/dev/vchiq \
+  <%= $profile::emby::registry %>/<%= $profile::emby::image %>
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-emby.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-emby.ctr-id
+PIDFile=%t/container-emby.pid
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target
