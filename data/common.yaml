@@ -31,6 +31,7 @@ profile::prometheus::scrape_configs:
     static_configs:
       - targets:
           - 'homer.enormous.co.ck:9100'
+          - 'marge.enormous.co.ck:9100'
 profile::prometheus::alerts:
   groups:
     - name: NodeExporter
