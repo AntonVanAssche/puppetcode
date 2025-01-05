@@ -1,0 +1,36 @@
+[Unit]
+Description=Transmission Daemon
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/container-transmission.pid %t/container-transmission.ctr-id
+ExecStart=/usr/bin/podman run \
+  --conmon-pidfile %t/container-transmission.pid \
+  --cidfile %t/container-transmission.ctr-id \
+  --cgroups=no-conmon \
+  --replace -d \
+  --name transmission \
+  --env PUID=<%= $profile::transmission::uid %> \
+  --env PGID=<%= $profile::transmission::gid %> \
+  --env TZ=Europe/Brussels \
+<% $profile::transmission::volumes.each |$_container_path, $_host_path| { -%>
+  --volume=<%= $_host_path %>:<%= $_container_path %>:Z \
+<% } -%>
+<% $profile::transmission::ports.each |$_protocol, $_port_array| { -%>
+  <% $_port_array.each |$_host_port| { -%>
+  --publish=<%= $_host_port %>:<%= $_host_port %>/<%= $_protocol %> \
+  <% } -%>
+<% } -%>
+  --restart=always \
+  <%= $profile::transmission::registry %>/<%= $profile::transmission::image %>
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-transmission.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-transmission.ctr-id
+PIDFile=%t/container-transmission.pid
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target

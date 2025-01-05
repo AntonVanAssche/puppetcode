@@ -336,3 +336,17 @@ profile::prometheus::node_exporter::version: '1.8.2'
 profile::prometheus::alertmanager::version: '0.27.0'
 
 profile::grafana::version: '11.4.0'
+profile::transmission::registry: 'lscr.io'
+profile::transmission::image: 'linuxserver/transmission'
+profile::transmission::volumes:
+  '/config': '/var/lib/podman/volumes/configs/transmission/config'
+  '/downloads': '/mnt/transmission/downloads'
+  '/watch': '/mnt/transmission/watch'
+profile::transmission::ports:
+  tcp:
+    - '9091'
+    - '51413'
+  udp:
+    - '51413'
+profile::transmission::uid: 995
+profile::transmission::gid: 992
