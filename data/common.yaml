@@ -1,0 +1,27 @@
+---
+profile::base::packages:
+  - 'at'
+  - 'bash-completion'
+  - 'bzip2'
+  - 'curl'
+  - 'fail2ban'
+  - 'firewalld'
+  - 'git'
+  - 'htop'
+  - 'jq'
+  - 'openssh-server'
+  - 'patch'
+  - 'rsync'
+  - 'tcpdump'
+  - 'tmux'
+  - 'traceroute'
+  - 'tree'
+  - 'unzip'
+  - 'vim'
+  - 'zip'
+
+profile::base::firewall::allowed_services:
+  - 'ssh'
+  - 'http'
+  - 'https'
+profile::base::firewall::allowed_ports: []

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+. /etc/os-release
+
+lanIP() {
+    printf '%s' "100.82.22.80"
+}
+
+printf '+----------------------------------------------------+\n'
+printf '|                                                    |\n'
+printf '|    Welcome to %-37s|\n' "lx-20240381"
+printf '|                                                    |\n'
+printf '+----------------------------------------------------+\n'
+printf '|                                                    |\n'
+printf '|    User: %-42s|\n' "vassa"
+printf '|    OS:   %-42s|\n' ""
+printf '|    IP:   %-42s|\n' ""
+printf '|    Date: %-42s|\n' "Saturday, 11 January 2025, 21:44:58"
+printf '|                                                    |\n'
+printf '+----------------------------------------------------+\n'
+
