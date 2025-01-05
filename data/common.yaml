@@ -334,3 +334,5 @@ profile::prometheus::alerts:
 profile::prometheus::version: '3.1.0'
 profile::prometheus::node_exporter::version: '1.8.2'
 profile::prometheus::alertmanager::version: '0.27.0'
+
+profile::grafana::version: '11.4.0'
