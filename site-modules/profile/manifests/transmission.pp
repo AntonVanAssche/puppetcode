@@ -22,6 +22,7 @@ class profile::transmission (
   Hash[String, String] $volumes,
 ) {
   include profile::podman
+  include profile::apache::reverse_proxy_transmission
 
   $user = 'transmission'
   $group = 'transmission'
