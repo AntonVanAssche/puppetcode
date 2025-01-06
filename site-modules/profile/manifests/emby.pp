@@ -2,8 +2,6 @@
 #
 # Install and configure the Emby media server.
 #
-# @param gid
-#   GID of the Emby group.
 # @param image
 #   Image to pull.
 # @param port
@@ -12,8 +10,6 @@
 #   TCP or UDP.
 # @param registry
 #   Registry to pull the image from.
-# @param uid
-#   UID of the Emby user.
 # @param volumes
 #   Volume mappings.
 #
@@ -21,29 +17,24 @@
 #   include profile::emby
 #
 class profile::emby (
-  Integer              $gid,
   String[1]            $image,
   String[1]            $port,
   String[1]            $protocol,
   String[1]            $registry,
-  Integer              $uid,
   Hash[String, String] $volumes,
 ) {
   include profile::podman
 
-  $_user = 'emby'
-  $_group = 'emby'
+  $user = 'emby'
+  $group = 'emby'
 
-  user { $_user:
+  group { $group:
     ensure => present,
-    uid    => $uid,
-    gid    => $gid,
     system => true,
   }
 
-  group { $_group:
+  user { $user:
     ensure => present,
-    gid    => $gid,
     system => true,
   }
 
@@ -59,8 +50,8 @@ class profile::emby (
   file {
     default:
       ensure => directory,
-      owner  => $_user,
-      group  => $_group,
+      owner  => $user,
+      group  => $group,
       mode   => '0755',
       ;
     '/mnt/emby':
@@ -69,23 +60,14 @@ class profile::emby (
       ;
   }
 
-  $volumes.each |$k, $v| {
-    file { $v:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
-    }
-  }
-
   systemd::unit_file { 'emby.service':
     ensure  => present,
-    owner   => $_user,
-    group   => $_group,
+    owner   => $user,
+    group   => $group,
     mode    => '0644',
     active  => true,
     enable  => true,
-    content => epp('profile/emby/service.epp'),
+    content => template('profile/emby/service.erb'),
   }
 
   firewalld_port { $port:

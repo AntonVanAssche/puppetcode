@@ -361,8 +361,6 @@ profile::emby::volumes:
   '/media/series': '/mnt/emby/media/series'
 profile::emby::port: '8096'
 profile::emby::protocol: 'tcp'
-profile::emby::uid: 994
-profile::emby::gid: 991
 
 profile::pihole::registry: 'docker.io'
 profile::pihole::image: 'pihole/pihole'

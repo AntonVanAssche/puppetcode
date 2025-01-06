@@ -14,15 +14,15 @@ ExecStart=/usr/bin/podman run \
   --cgroups=no-conmon \
   --replace -d \
   --name emby \
-  --env UID=<%= $profile::emby::uid %> \
-  --env GID=<%= $profile::emby::gid %> \
+  --env UID=<%= Etc.getpwnam(scope.lookupvar('profile::emby::user')).uid %> \
+  --env GID=<%= Etc.getgrnam(scope.lookupvar('profile::emby::group')).gid %> \
   --env TZ=Europe/Brussels \
-<% $profile::emby::volumes.each |$_container_path, $_host_path| { -%>
-  --volume=<%= $_host_path %>:<%= $_container_path %>:Z \
-<% } -%>
-  --publish=<%= $profile::emby::port %>:<%= $profile::emby::port %>/<%= $profile::emby::protocol %> \
+<% @volumes.each do |container_path, host_path| -%>
+  --volume=<%= host_path %>:<%= container_path %>:Z \
+<% end -%>
+  --publish=<%= scope.lookupvar('profile::emby::port') %>:8096/tcp \
   --device /dev/vchiq:/dev/vchiq \
-  <%= $profile::emby::registry %>/<%= $profile::emby::image %>
+  <%= scope.lookupvar('profile::emby::registry') %>/<%= scope.lookupvar('profile::emby::image') %>
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-emby.ctr-id -t 10
 ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-emby.ctr-id
 PIDFile=%t/container-emby.pid
