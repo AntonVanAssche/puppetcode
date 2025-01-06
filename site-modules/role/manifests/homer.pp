@@ -4,4 +4,5 @@ class role::homer {
   include profile::grafana
   include profile::prometheus
   include profile::transmission
+  include profile::apache::reverse_proxy
 }
