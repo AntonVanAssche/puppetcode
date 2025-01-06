@@ -3,16 +3,12 @@
 # Installs the Transmission BitTorrent client and sets
 # up a basic configuration.
 #
-# @param gid
-#   GID for the Transmission group.
 # @param image
 #   Image to pull.
 # @param ports
 #   Ports to expose.
 # @param registry
 #   Registry to pull the image from.
-# @param uid
-#   UID for the Transmission user.
 # @param volumes
 #   Volume mappings.
 #
@@ -20,48 +16,43 @@
 #   include profile::transmission
 #
 class profile::transmission (
-  Integer              $gid,
   String[1]            $image,
   Hash[String, Tuple]  $ports,
   String[1]            $registry,
-  Integer              $uid,
   Hash[String, String] $volumes,
 ) {
   include profile::podman
 
-  $_user = 'transmission'
-  $_group = 'transmission'
+  $user = 'transmission'
+  $group = 'transmission'
 
-  user { $_user:
+  group { $group:
     ensure => present,
-    uid    => $uid,
-    gid    => $gid,
     system => true,
   }
 
-  group { $_group:
+  user { $user:
     ensure => present,
-    gid    => $gid,
     system => true,
   }
 
   $volumes.each |$k, $v| {
     file { $v:
       ensure => directory,
-      owner  => $_user,
-      group  => $_group,
+      owner  => $user,
+      group  => $group,
       mode   => '0755',
     }
   }
 
   systemd::unit_file { 'transmission.service':
     ensure  => present,
-    owner   => $_user,
-    group   => $_group,
+    owner   => $user,
+    group   => $group,
     mode    => '0644',
     active  => true,
     enable  => true,
-    content => epp('profile/transmission/service.epp'),
+    content => template('profile/transmission/service.erb'),
   }
 
   $ports.each |$k, $v| {

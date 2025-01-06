@@ -14,19 +14,19 @@ ExecStart=/usr/bin/podman run \
   --cgroups=no-conmon \
   --replace -d \
   --name transmission \
-  --env PUID=<%= $profile::transmission::uid %> \
-  --env PGID=<%= $profile::transmission::gid %> \
+  --env PUID=<%= Etc.getpwnam(scope.lookupvar('profile::transmission::user')).uid %> \
+  --env PGID=<%= Etc.getgrnam(scope.lookupvar('profile::transmission::group')).gid %> \
   --env TZ=Europe/Brussels \
-<% $profile::transmission::volumes.each |$_container_path, $_host_path| { -%>
-  --volume=<%= $_host_path %>:<%= $_container_path %>:Z \
-<% } -%>
-<% $profile::transmission::ports.each |$_protocol, $_port_array| { -%>
-  <% $_port_array.each |$_host_port| { -%>
-  --publish=<%= $_host_port %>:<%= $_host_port %>/<%= $_protocol %> \
-  <% } -%>
-<% } -%>
+<% scope.lookupvar('profile::transmission::volumes').each do |container_path, host_path| -%>
+  --volume=<%= host_path %>:<%= container_path %>:Z \
+<% end -%>
+<% scope.lookupvar('profile::transmission::ports').each do |protocol, port_array| -%>
+  <% port_array.each do |host_port| -%>
+  --publish=<%= host_port %>:<%= host_port %>/<%= protocol %> \
+  <% end -%>
+<% end -%>
   --restart=always \
-  <%= $profile::transmission::registry %>/<%= $profile::transmission::image %>
+  <%= scope.lookupvar('profile::transmission::registry') %>/<%= scope.lookupvar('profile::transmission::image') %>
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-transmission.ctr-id -t 10
 ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-transmission.ctr-id
 PIDFile=%t/container-transmission.pid

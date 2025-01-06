@@ -350,8 +350,6 @@ profile::transmission::ports:
     - '51413'
   udp:
     - '51413'
-profile::transmission::uid: 995
-profile::transmission::gid: 992
 
 profile::emby::registry: 'docker.io'
 profile::emby::image: 'emby/embyserver_arm64v8'
