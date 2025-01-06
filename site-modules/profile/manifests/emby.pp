@@ -24,6 +24,7 @@ class profile::emby (
   Hash[String, String] $volumes,
 ) {
   include profile::podman
+  include profile::apache::reverse_proxy_emby
 
   $user = 'emby'
   $group = 'emby'
