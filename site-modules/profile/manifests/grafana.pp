@@ -9,6 +9,8 @@
 class profile::grafana (
   String[1] $version,
 ) {
+  include profile::apache::reverse_proxy_grafana
+
   class { 'grafana':
     version                  => $version,
     manage_package_repo      => true,
