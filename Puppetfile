@@ -11,6 +11,7 @@ mod 'puppetlabs-apache', :latest
 mod 'puppetlabs-apt', :latest
 mod 'puppetlabs-concat', :latest
 mod 'puppetlabs-stdlib', :latest
+mod 'puppetlabs-vcsrepo', :latest
 mod 'rehan-samba', :latest
 mod 'saz-sudo', :latest
 mod 'saz-ssh', :latest

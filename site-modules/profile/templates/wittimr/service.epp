@@ -1,0 +1,26 @@
+[Unit]
+Description=What is the temperature in my room
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/container-wittimr.pid %t/container-wittimr.ctr-id
+ExecStart=/usr/bin/podman run \
+  --conmon-pidfile %t/container-wittimr.pid \
+  --cidfile %t/container-wittimr.ctr-id \
+  --replace -d \
+  --name wittimr \
+  --privileged \
+  --volume=/dev/ttyACM0:/dev/ttyACM0:ro \
+  --publish=8080:5000/tcp \
+  localhost/wittimr:latest
+ExecStop=/usr/bin/podman stop --ignore --cidfile=%t/container-wittimr.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile=%t/container-wittimr.ctr-id
+PIDFile=%t/container-wittimr.pid
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target
