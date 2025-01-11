@@ -5,6 +5,7 @@
 #
 class profile::wittimr {
   include profile::podman
+  include profile::apache::reverse_proxy_wittimr
 
   $_install_dir = '/opt/wittimr'
 
@@ -12,7 +13,6 @@ class profile::wittimr {
     ensure   => present,
     provider => 'git',
     source   => 'https://github.com/AntonVanAssche/wittimr.git',
-    revision => 'websocket',
     notify   => Exec['build-wittimr'],
   }
 
