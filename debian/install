@@ -5,4 +5,8 @@ data opt/puppetcode/
 hiera.yml opt/puppetcode/
 manifests opt/puppetcode/
 site-modules opt/puppetcode/
-bin/puppetcode.sh /usr/bin/puppetcode.sh
+bin/puppetcode.sh usr/bin/
+sources/puppetcode_apply.service usr/lib/systemd/system/
+sources/puppetcode_apply.timer usr/lib/systemd/system/
+sources/puppetcode_upgrade.service usr/lib/systemd/system/
+sources/puppetcode_upgrade.timer usr/lib/systemd/system/

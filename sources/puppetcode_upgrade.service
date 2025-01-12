@@ -1,0 +1,7 @@
+[Unit]
+Description=Run Puppet Code Upgrade
+Wants=puppetcode-upgrade.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/puppetcode.sh -u

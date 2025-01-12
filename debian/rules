@@ -15,3 +15,12 @@ override_dh_auto_install:
 
 override_dh_builddeb:
 	dh_builddeb -- -Zgzip
+
+override_dh_installinit:
+	dh_installinit --no-enable
+
+override_dh_installsystemd:
+	dh_installsystemd puppetcode_apply.timer
+	dh_installsystemd puppetcode_apply.service --no-enable
+	dh_installsystemd puppetcode_upgrade.timer
+	dh_installsystemd puppetcode_upgrade.service --no-enable
