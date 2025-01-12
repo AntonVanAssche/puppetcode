@@ -1,0 +1,8 @@
+LICENSE.md opt/puppetcode/
+Puppetfile opt/puppetcode/
+README.md opt/puppetcode/
+data opt/puppetcode/
+hiera.yml opt/puppetcode/
+manifests opt/puppetcode/
+site-modules opt/puppetcode/
+bin/puppetcode.sh /usr/bin/puppetcode.sh

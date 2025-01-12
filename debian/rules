@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+
+override_dh_auto_configure:
+	wget https://apt.puppet.com/puppet8-release-bullseye.deb
+	sudo dpkg -i puppet8-release-bullseye.deb
+	sudo apt-get update
+
+override_dh_auto_install:
+	dh_auto_install --destdir=$(CURDIR)/debian/puppetcode/
+	if [ -d "$(CURDIR)/debian/puppetcode/opt/puppetcode" ]; then \
+		find $(CURDIR)/debian/puppetcode/opt/puppetcode/ -name debian -type d -exec rm -rf {} +; \
+	fi
+
+override_dh_builddeb:
+	dh_builddeb -- -Zgzip
