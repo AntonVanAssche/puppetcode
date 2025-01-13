@@ -12,4 +12,15 @@ class profile::base {
   include profile::base::fail2ban
   include profile::prometheus::node_exporter
   include profile::tailscale
+
+  service {
+    default:
+      ensure => 'running',
+      enable => true,
+      ;
+    'puppetcode_apply.timer':
+      ;
+    'puppetcode_upgrade.timer':
+      ;
+  }
 }
