@@ -228,6 +228,14 @@ profile::prometheus::alerts:
           annotations:
             summary: Host RAID array got checking (instance {{ $labels.instance }})
             description: "RAID array {{ $labels.device }} is in a checking state\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: HostRaidArrayGotRecovering
+          expr: '(node_md_state{state="recovering"} > 0) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
+          for: 0m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host RAID array got recovering (instance {{ $labels.instance }})
+            description: "RAID array {{ $labels.device }} is in a recovering state\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: HostRaidArrayGotInactive
           expr: '(node_md_state{state="inactive"} > 0) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
           for: 0m
