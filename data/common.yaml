@@ -220,6 +220,14 @@ profile::prometheus::alerts:
           annotations:
             summary: Host node overtemperature alarm (instance {{ $labels.instance }})
             description: "Physical node temperature alarm triggered\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: HostRaidArratGotChecking
+          expr: '(node_md_state{state="checking"} > 0) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
+          for: 0m
+          labels:
+            severity: info
+          annotations:
+            summary: Host RAID array got checking (instance {{ $labels.instance }})
+            description: "RAID array {{ $labels.device }} is in a checking state\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: HostRaidArrayGotInactive
           expr: '(node_md_state{state="inactive"} > 0) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
           for: 0m
