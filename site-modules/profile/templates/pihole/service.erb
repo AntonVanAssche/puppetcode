@@ -1,0 +1,40 @@
+[Unit]
+Description=Pihole
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/container-pihole.pid %t/container-pihole.ctr-id
+ExecStart=/usr/bin/podman run \
+  --conmon-pidfile %t/container-pihole.pid \
+  --cidfile %t/container-pihole.ctr-id \
+  --cgroups=no-conmon \
+  --replace -d \
+  --name pihole \
+  --network host \
+  --env PIHOLE_UID=<%= Etc.getpwnam(scope.lookupvar('profile::pihole::user')).uid %> \
+  --env PIHOLE_GID=<%= Etc.getgrnam(scope.lookupvar('profile::pihole::group')).gid %> \
+  --env VIRTUAL_HOST=<%= scope.lookupvar('facts')['networking']['fqdn'] %> \
+  --env FTLCONF_LOCAL_IPV4=<%= scope.lookupvar('facts')['networking']['ip'] %> \
+  --env DNSMASQ_LISTENING=all \
+  --env WEBPASSWORD=<%= scope.lookupvar('profile::pihole::password') %> \
+  --env PIHOLE_DNS_="127.0.0.1#5053;8.8.8.8;8.8.4.4" \
+  --env DNSSEC=true \
+  --env TZ=Europe/Brussels \
+<% scope.lookupvar('profile::pihole::volumes').each do |container_path, host_path| -%>
+  --volume=<%= host_path %>:<%= container_path %>:Z \
+<% end -%>
+  --publish 53:53/tcp \
+  --publish 53:53/udp \
+  --publish 80:80/tcp \
+  <%= scope.lookupvar('profile::pihole::registry') %>/<%= scope.lookupvar('profile::pihole::image') %>
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-pihole.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-pihole.ctr-id
+PIDFile=%t/container-pihole.pid
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target

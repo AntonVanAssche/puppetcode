@@ -1,0 +1,36 @@
+[Unit]
+Description=Transmission Daemon
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/container-transmission.pid %t/container-transmission.ctr-id
+ExecStart=/usr/bin/podman run \
+  --conmon-pidfile %t/container-transmission.pid \
+  --cidfile %t/container-transmission.ctr-id \
+  --cgroups=no-conmon \
+  --replace -d \
+  --name transmission \
+  --env PUID=<%= Etc.getpwnam(scope.lookupvar('profile::transmission::user')).uid %> \
+  --env PGID=<%= Etc.getgrnam(scope.lookupvar('profile::transmission::group')).gid %> \
+  --env TZ=Europe/Brussels \
+<% scope.lookupvar('profile::transmission::volumes').each do |container_path, host_path| -%>
+  --volume=<%= host_path %>:<%= container_path %>:Z \
+<% end -%>
+<% scope.lookupvar('profile::transmission::ports').each do |protocol, port_array| -%>
+  <% port_array.each do |host_port| -%>
+  --publish=<%= host_port %>:<%= host_port %>/<%= protocol %> \
+  <% end -%>
+<% end -%>
+  --restart=always \
+  <%= scope.lookupvar('profile::transmission::registry') %>/<%= scope.lookupvar('profile::transmission::image') %>
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-transmission.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-transmission.ctr-id
+PIDFile=%t/container-transmission.pid
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target

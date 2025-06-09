@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer to Run Puppet Code Apply Every Hour
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

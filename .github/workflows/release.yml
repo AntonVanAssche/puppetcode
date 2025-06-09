@@ -1,0 +1,74 @@
+---
+name: Build Packages
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Debian Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y devscripts debhelper fakeroot build-essential
+
+      - name: Set version
+        run: |
+          VERSION=$(dpkg-parsechangelog --show-field Version | cut -d'-' -f1)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Prepare .orig.tar.gz
+        run: |
+          tar -czf ../puppetcode_${{ env.VERSION }}.orig.tar.gz --exclude=.git --exclude=debian .
+
+      - name: Build Debian Package
+        run: |
+          DEB_COMPRESSION=xz dpkg-buildpackage -us -uc -ui
+
+      - name: Move package to workspace
+        run: |
+          mv ../puppetcode_${{ env.VERSION }}-1_all.deb puppetcode_${{ env.VERSION }}-1_all.deb
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-package
+          path: puppetcode_${{ env.VERSION }}-1_all.deb
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: debian-package
+
+      - name: Extract package name
+        run: |
+          DEB_PACKAGE_NAME=$(ls *.deb | head -n 1)
+          echo "DEB_PACKAGE_NAME=${DEB_PACKAGE_NAME}" >> $GITHUB_ENV
+
+      - uses: danielmundi/upload-packagecloud@v1
+        with:
+          PACKAGE-NAME: ${{ env.DEB_PACKAGE_NAME }}
+          PACKAGECLOUD-USERNAME: AntonVanAssche
+          PACKAGECLOUD-REPO: puppetcode
+          PACKAGECLOUD-DISTRIB: debian/bullseye
+          PACKAGECLOUD-TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}

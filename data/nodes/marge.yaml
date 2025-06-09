@@ -1,0 +1,2 @@
+---
+profile::tailscale::accept_dns: false

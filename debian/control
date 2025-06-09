@@ -1,0 +1,12 @@
+Source: puppetcode
+Section: admin
+Priority: optional
+Maintainer: Anton Van Assche <vanasscheanton@gmail.com>
+Standards-Version: 4.5.1
+Homepage: https://www.github.com/AntonVanA/puppetcode
+
+Package: puppetcode
+Architecture: all
+Depends: puppet8-release, puppet-agent
+Description: Puppet automation for my homelab
+ This package contains the puppet automation for my homelab.
