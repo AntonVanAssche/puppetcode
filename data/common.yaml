@@ -1,5 +1,5 @@
 ---
-profile::base::packages:
+profile::base::packages::install:
   - 'at'
   - 'bash-completion'
   - 'bzip2'
