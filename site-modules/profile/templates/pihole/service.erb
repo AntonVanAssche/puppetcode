@@ -18,11 +18,11 @@ ExecStart=/usr/bin/podman run \
   --env PIHOLE_UID=<%= Etc.getpwnam(scope.lookupvar('profile::pihole::user')).uid %> \
   --env PIHOLE_GID=<%= Etc.getgrnam(scope.lookupvar('profile::pihole::group')).gid %> \
   --env VIRTUAL_HOST=<%= scope.lookupvar('facts')['networking']['fqdn'] %> \
-  --env FTLCONF_LOCAL_IPV4=<%= scope.lookupvar('facts')['networking']['ip'] %> \
   --env DNSMASQ_LISTENING=all \
-  --env WEBPASSWORD=<%= scope.lookupvar('profile::pihole::password') %> \
-  --env PIHOLE_DNS_="127.0.0.1#5053;8.8.8.8;8.8.4.4" \
-  --env DNSSEC=true \
+  --env FTLCONF_webserver_api_password=<%= scope.lookupvar('profile::pihole::password') %> \
+  --env FTLCONF_dns_upstreams="127.0.0.1#5053;8.8.8.8;8.8.4.4" \
+  --env FTLCONF_dns_dnssec=true \
+  --env FTLCONF_dns_listeningMode=all \
   --env TZ=Europe/Brussels \
 <% scope.lookupvar('profile::pihole::volumes').each do |container_path, host_path| -%>
   --volume=<%= host_path %>:<%= container_path %>:Z \

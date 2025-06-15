@@ -1,5 +1,15 @@
 ---
-profile::base::packages:
+lookup_options:
+  profile::base::packages::install:
+    merge: deep
+  profile::base::packages::uninstall:
+    merge: deep
+  profile::prometheus::scrape_configs:
+    merge: deep
+  profile::prometheus::alerts:
+    merge: deep
+
+profile::base::packages::install:
   - 'at'
   - 'bash-completion'
   - 'bzip2'
