@@ -1,4 +1,10 @@
 ---
+lookup_options:
+  profile::base::packages::install:
+    merge: deep
+  profile::base::packages::uninstall:
+    merge: deep
+
 profile::base::packages::install:
   - 'at'
   - 'bash-completion'
