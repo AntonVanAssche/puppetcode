@@ -14,7 +14,6 @@ profile::base::packages::install:
   - 'bash-completion'
   - 'bzip2'
   - 'curl'
-  - 'fail2ban'
   - 'firewalld'
   - 'git'
   - 'htop'
