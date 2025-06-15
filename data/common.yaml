@@ -360,7 +360,7 @@ profile::prometheus::alerts:
             description: "{{ $labels.instance }} requires a reboot.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
 profile::prometheus::version: '3.4.1'
-profile::prometheus::node_exporter::version: '1.8.2'
+profile::prometheus::node_exporter::version: '1.9.1'
 profile::prometheus::alertmanager::version: '0.27.0'
 
 profile::grafana::version: '11.4.0'
