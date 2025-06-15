@@ -1,5 +1,2 @@
 ---
-profile::base::packages::install:
-  - samba
-
 profile::tailscale::accept_dns: false
