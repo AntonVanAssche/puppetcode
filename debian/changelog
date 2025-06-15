@@ -1,8 +1,11 @@
-puppetcode (1.0.0-1) unstable; urgency=medium
+puppetcode (1.0.2-1) unstable; urgency=medium
 
-  * Initial release of puppetcode.
+  * [grafana] Upgrade to 12.0.1
+  * [alertmanager] Upgrade to 0.28.1
+  * [node_exporter] Upgrade to 1.9.1
+  * [prometheus] Upgrade to 3.4.1
 
- -- Anton Van Assche <vanasscheanton@gmail.com>  Sat, 12 Jan 2025 12:00:00 +0000
+ -- Anton Van Assche <vanasscheanton@gmail.com>  Sun, 15 Jun 2025 13:00:00 +0000
 
 puppetcode (1.0.1-1) unstable; urgency=medium
 
@@ -13,11 +16,8 @@ puppetcode (1.0.1-1) unstable; urgency=medium
 
  -- Anton Van Assche <vanasscheanton@gmail.com>  Sun, 15 Jun 2025 12:00:00 +0000
 
-puppetcode (1.0.2-1) unstable; urgency=medium
+puppetcode (1.0.0-1) unstable; urgency=medium
 
-  * [grafana] Upgrade to 12.0.1
-  * [alertmanager] Upgrade to 0.28.1
-  * [node_exporter] Upgrade to 1.9.1
-  * [prometheus] Upgrade to 3.4.1
+  * Initial release of puppetcode.
 
- -- Anton Van Assche <vanasscheanton@gmail.com>  Sun, 15 Jun 2025 13:00:00 +0000
+ -- Anton Van Assche <vanasscheanton@gmail.com>  Sat, 12 Jan 2025 12:00:00 +0000
