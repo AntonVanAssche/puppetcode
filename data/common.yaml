@@ -4,6 +4,10 @@ lookup_options:
     merge: deep
   profile::base::packages::uninstall:
     merge: deep
+  profile::prometheus::scrape_configs:
+    merge: deep
+  profile::prometheus::alerts:
+    merge: deep
 
 profile::base::packages::install:
   - 'at'
