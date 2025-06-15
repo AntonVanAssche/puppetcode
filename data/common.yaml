@@ -359,11 +359,11 @@ profile::prometheus::alerts:
             summary: Host requires reboot (instance {{ $labels.instance }})
             description: "{{ $labels.instance }} requires a reboot.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-profile::prometheus::version: '3.1.0'
-profile::prometheus::node_exporter::version: '1.8.2'
-profile::prometheus::alertmanager::version: '0.27.0'
+profile::prometheus::version: '3.4.1'
+profile::prometheus::node_exporter::version: '1.9.1'
+profile::prometheus::alertmanager::version: '0.28.1'
+profile::grafana::version: '12.0.1'
 
-profile::grafana::version: '11.4.0'
 profile::transmission::registry: 'lscr.io'
 profile::transmission::image: 'linuxserver/transmission'
 profile::transmission::volumes:
