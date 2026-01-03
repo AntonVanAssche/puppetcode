@@ -51,8 +51,8 @@ class profile::pihole (
   $volumes.each |$k, $v| {
     file { $v:
       ensure => directory,
-      owner  => 'root',
-      group  => 'root',
+      owner  => $user,
+      group  => $user,
       mode   => '0755',
       before => Systemd::Unit_file['pihole.service'],
     }
