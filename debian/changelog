@@ -1,3 +1,9 @@
+puppetcode (1.0.6-1) unstable; urgency=medium
+
+  * [pihole] Fix upstream DNS env var for FTL config
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Sat, 03 Jan 2026 15:38:04 +0000
+
 puppetcode (1.0.5-1) unstable; urgency=medium
 
   * [pihole] Fix volume ownership to allow db writes
