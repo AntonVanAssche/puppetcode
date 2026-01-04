@@ -61,14 +61,6 @@ profile::prometheus::alerts:
           annotations:
             summary: Host memory under memory pressure (instance {{ $labels.instance }})
             description: "The node is under heavy memory pressure. High rate of major page faults\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-        - alert: HostMemoryIsUnderutilized
-          expr: '(100 - (avg_over_time(node_memory_MemAvailable_bytes[30m]) / node_memory_MemTotal_bytes * 100) < 20) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
-          for: 1w
-          labels:
-            severity: info
-          annotations:
-            summary: Host Memory is underutilized (instance {{ $labels.instance }})
-            description: "Node memory is < 20% for 1 week. Consider reducing memory space. (instance {{ $labels.instance }})\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: HostUnusualNetworkThroughputIn
           expr: '(sum by (instance) (rate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}'
           for: 5m
