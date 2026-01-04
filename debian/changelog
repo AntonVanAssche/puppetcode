@@ -1,3 +1,11 @@
+puppetcode (1.0.7-1) unstable; urgency=medium
+
+  * [alertmanager] Increase latency threshold
+  * [alertmanager] Remove HostCpuIsUnderutilized alert
+  * [alertmanager] Remove HostMemoryIsUnderutilized alert
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Sat, 04 Jan 2026 22:41:47 +0000
+
 puppetcode (1.0.6-1) unstable; urgency=medium
 
   * [pihole] Fix upstream DNS env var for FTL config
