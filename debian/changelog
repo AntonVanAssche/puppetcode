@@ -1,3 +1,9 @@
+puppetcode (2.0.0-1) unstable; urgency=medium
+
+  * Migrate to OpenVox 8
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Sun, 14 jun 2026 23:06:15 +0000
+
 puppetcode (1.0.8-1) unstable; urgency=medium
 
   * [grafana] Upgrade to 13.0.2
