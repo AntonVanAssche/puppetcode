@@ -1,3 +1,13 @@
+puppetcode (1.0.8-1) unstable; urgency=medium
+
+  * [grafana] Upgrade to 13.0.2
+  * [alertmanager] Upgrade to 0.33.0
+  * [node_exporter] Upgrade to 1.11.1
+  * [prometheus] Upgrade to 3.12.0
+
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Sun, 14 jun 2026 19:09:22 +0000
+
 puppetcode (1.0.7-1) unstable; urgency=medium
 
   * [alertmanager] Increase latency threshold
