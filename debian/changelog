@@ -1,3 +1,9 @@
+puppetcode (2.0.1-1) unstable; urgency=medium
+
+  * [puppetcode.sh] Add enable/disable controls for systemd timer
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Sun, 14 jun 2026 23:25:00 +0000
+
 puppetcode (2.0.0-1) unstable; urgency=medium
 
   * Migrate to OpenVox 8
