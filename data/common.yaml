@@ -344,7 +344,7 @@ profile::prometheus::alerts:
 
 profile::prometheus::version: '3.12.0'
 profile::prometheus::node_exporter::version: '1.11.1'
-profile::prometheus::alertmanager::version: '0.28.1'
+profile::prometheus::alertmanager::version: '0.33.0'
 profile::grafana::version: '12.0.1'
 
 profile::transmission::registry: 'lscr.io'
