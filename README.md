@@ -1,8 +1,8 @@
 # Puppetcode
 
 This is a personal homelab project utilizing two Raspberry Pi 4B devices (
-Homer and Marge), both running Debian Bullseye. The infrastructure is mostly
-managed with Puppet, automating the setup and configuration of services.
+Homer and Marge), both running Debian Trixie. The infrastructure is mostly
+managed with OpenVox, automating the setup and configuration of services.
 
 ## Key Features
 
@@ -49,4 +49,4 @@ managed with Puppet, automating the setup and configuration of services.
 # ./puppetcode.sh -i
 ```
 
-This will install Puppet, necessary dependencies, and the deb package of this repo.
+This will install OpenVox, necessary dependencies, and the deb package of this repo.

@@ -7,6 +7,6 @@ Homepage: https://www.github.com/AntonVanA/puppetcode
 
 Package: puppetcode
 Architecture: all
-Depends: puppet8-release, puppet-agent
+Depends: openvox8-release, openvox-agent
 Description: Puppet automation for my homelab
  This package contains the puppet automation for my homelab.

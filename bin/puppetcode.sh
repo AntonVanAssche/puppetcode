@@ -54,8 +54,8 @@ install() {
         { echo "Puppet code is already installed." >&2; exit 1; }
 
     /usr/bin/cat <<EOF > /etc/apt/sources.list.d/puppetcode.list
-deb [signed-by=/etc/apt/keyrings/puppetcode-archive-keyring.gpg] https://packagecloud.io/AntonVanAssche/puppetcode/debian bullseye main
-deb-src [signed-by=/etc/apt/keyrings/puppetcode-archive-keyring.gpg] https://packagecloud.io/AntonVanAssche/puppetcode/debian bullseye main
+deb [signed-by=/etc/apt/keyrings/puppetcode-archive-keyring.gpg] https://packagecloud.io/AntonVanAssche/puppetcode/debian trixie main
+deb-src [signed-by=/etc/apt/keyrings/puppetcode-archive-keyring.gpg] https://packagecloud.io/AntonVanAssche/puppetcode/debian trixie main
 EOF
 
     [[ -x /usr/bin/curl ]] || /usr/bin/apt install -y curl
@@ -64,9 +64,9 @@ EOF
     /usr/bin/curl -fsSL https://packagecloud.io/AntonVanAssche/puppetcode/gpgkey | \
         /usr/bin/gpg --dearmor > /etc/apt/keyrings/puppetcode-archive-keyring.gpg
     /usr/bin/curl -fsSL \
-        -o /tmp/puppet8-release-bullseye.deb \
-        https://apt.puppet.com/puppet8-release-bullseye.deb
-    /usr/bin/apt install -y /tmp/puppet8-release-bullseye.deb
+        -o /tmp/openvox8-release-debian13.deb \
+        https://apt.voxpupuli.org/openvox8-release-debian13.deb
+    /usr/bin/apt install -y /tmp/openvox8-release-debian13.deb
     /usr/bin/apt update
     /usr/bin/apt install -y puppetcode
 

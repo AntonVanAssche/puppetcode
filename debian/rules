@@ -3,8 +3,8 @@
 	dh $@
 
 override_dh_auto_configure:
-	wget https://apt.puppet.com/puppet8-release-bullseye.deb
-	sudo dpkg -i puppet8-release-bullseye.deb
+	wget https://apt.voxpupuli.org/openvox8-release-debian13.deb
+	sudo dpkg -i openvox8-release-debian13.deb
 	sudo apt-get update
 
 override_dh_auto_install:
