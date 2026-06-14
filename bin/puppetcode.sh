@@ -18,6 +18,8 @@ Usage: $(basename "${0}") [OPTIONS]
 
 OPTIONS:
     -a  Apply the Puppet manifest.
+    -d  Disable the Puppet code systemd timer
+    -e  Enable the Puppet code systemd timer
     -h  Show this help message.
     -i  Install the Puppet code and dependencies.
     -u  Upgrade the Puppet code.
@@ -79,10 +81,24 @@ EOF
         --puppetfile "${PUPPET_CODE}/Puppetfile"
 }
 
-while getopts ":ahiu" opt; do
+disable() {
+    /usr/bin/systemctl disable --now puppetcode_apply.timer
+    /usr/bin/systemctl status --no-pager puppetcode_apply.timer
+}
+
+enable() {
+    /usr/bin/systemctl enable --now puppetcode_apply.timer
+    /usr/bin/systemctl status --no-pager puppetcode_apply.timer
+}
+
+while getopts ":adehiu" opt; do
     case ${opt} in
         a)
             apply;;
+        d)
+            disable;;
+        e)
+            enable;;
         h)
             usage;;
         i)
