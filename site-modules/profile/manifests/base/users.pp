@@ -1,11 +1,14 @@
 # @summary Manage users and groups
 #
 # @example Basic usage
-#   include profile::base::users
+#   class { 'profile::base::users':
+#     group     => 'alice',
+#     user      => 'alice',
+#   }
 #
 class profile::base::users (
-  String[1] $group = $facts['networking']['hostname'],
-  String[1] $user  = $facts['networking']['hostname'],
+  String[1] $group,
+  String[1] $user,
 ) {
   group { $group:
     ensure => present,
