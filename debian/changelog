@@ -1,3 +1,11 @@
+puppetcode (2.0.2-1) unstable; urgency=medium
+
+  * [base] Move user/group to hiera
+  * [base] Move sudo specs to hiera
+  * [base] Make user/group a class parameter
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 13 jul 2026 21:13:00 +0000
+
 puppetcode (2.0.1-1) unstable; urgency=medium
 
   * [puppetcode.sh] Add enable/disable controls for systemd timer
