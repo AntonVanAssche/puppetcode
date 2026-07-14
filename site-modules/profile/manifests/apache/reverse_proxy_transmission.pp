@@ -1,27 +1,30 @@
 # @summary Configure Apache reverse proxy for Transmission.
 #
+# @example Basic usage.
+#   class { 'profile::apache::reverse_proxy_transmission':
+#     servername => 'transmission.local',
+#   }
+#
+# @param servername
+#   The servername to use for the virtual host.
 # @param proxy_dest
 #   The destination to proxy to.
 #
-# @example Basic usage.
-#   include profile::apache::reverse_proxy_transmission
-#
 class profile::apache::reverse_proxy_transmission (
-  String[1] $proxy_dest = 'localhost',
+  Stdlib::Fqdn $servername,
+  String[1]    $proxy_dest = 'localhost',
 ) {
-  $_servername = $facts['networking']['domain']
-
-  apache::vhost { "transmission.${facts['networking']['domain']}_non-ssl":
-    servername      => "transmission.${facts['networking']['domain']}",
+  apache::vhost { "${servername}_non-ssl":
+    servername      => $servername,
     port            => 80,
     docroot         => '/var/www/html/',
     redirect_status => 'permanent',
-    redirect_dest   => "https://transmission.${facts['networking']['domain']}/",
+    redirect_dest   => "https://${servername}/",
   }
 
-  apache::vhost { "transmission.${facts['networking']['domain']}_ssl":
+  apache::vhost { "${servername}_ssl":
     ensure              => present,
-    servername          => "transmission.${facts['networking']['domain']}",
+    servername          => $servername,
     docroot             => '/var/www/html',
     proxy_preserve_host => true,
     proxy_requests      => false,
