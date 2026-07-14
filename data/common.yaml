@@ -387,3 +387,5 @@ profile::pihole::image: 'pihole/pihole'
 profile::pihole::volumes:
   '/etc/pihole': '/var/lib/podman/volumes/configs/pihole'
   '/etc/dnsmasq.d': '/var/lib/podman/volumes/configs/dnsmasq.d'
+
+profile::apache::reverse_proxy_wittimr::servername: "%{facts.networking.domain}"
