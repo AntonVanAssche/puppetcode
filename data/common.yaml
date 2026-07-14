@@ -380,6 +380,7 @@ profile::emby::volumes:
   '/media/series': '/mnt/emby/media/series'
 profile::emby::port: '8096'
 profile::emby::protocol: 'tcp'
+profile::apache::reverse_proxy_emby::servername: "emby.%{facts.networking.domain}"
 
 profile::pihole::registry: 'docker.io'
 profile::pihole::image: 'pihole/pihole'
