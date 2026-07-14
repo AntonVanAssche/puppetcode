@@ -1,2 +1,3 @@
 ---
 profile::apache::reverse_proxy_pihole::proxy_dest: "marge.%{facts.networking.domain}"
+profile::apache::reverse_proxy_pihole::servername: "pihole.%{facts.networking.domain}"
