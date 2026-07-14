@@ -1,27 +1,30 @@
 # @summary Configure Apache reverse proxy for Grafana.
 #
+# @example Basic usage.
+#   class { 'profile::apache::reverse_proxy_grafana':
+#     servername => 'grafana.local',
+#   }
+#
+# @param servername
+#   The servername to use for the virtual host.
 # @param proxy_dest
 #   The destination to proxy to.
 #
-# @example Basic usage.
-#   include profile::apache::reverse_proxy_grafana
-#
 class profile::apache::reverse_proxy_grafana (
-  String[1] $proxy_dest = 'localhost',
+  Stdlib::Fqdn $servername,
+  String[1]    $proxy_dest = 'localhost',
 ) {
-  $_servername = $facts['networking']['domain']
-
-  apache::vhost { "grafana.${facts['networking']['domain']}_non-ssl":
-    servername      => "grafana.${facts['networking']['domain']}",
+  apache::vhost { "${servername}_non-ssl":
+    servername      => $servername,
     port            => 80,
     docroot         => '/var/www/html/',
     redirect_status => 'permanent',
-    redirect_dest   => "https://grafana.${facts['networking']['domain']}/",
+    redirect_dest   => "https://${servername}/",
   }
 
-  apache::vhost { "grafana.${facts['networking']['domain']}_ssl":
+  apache::vhost { "${servername}_ssl":
     ensure              => present,
-    servername          => "grafana.${facts['networking']['domain']}",
+    servername          => $servername,
     docroot             => '/var/www/html',
     proxy_preserve_host => true,
     proxy_requests      => false,
