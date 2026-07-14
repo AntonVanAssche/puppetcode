@@ -390,3 +390,6 @@ profile::pihole::volumes:
   '/etc/dnsmasq.d': '/var/lib/podman/volumes/configs/dnsmasq.d'
 
 profile::apache::reverse_proxy_wittimr::servername: "%{facts.networking.domain}"
+
+profile::apache::servername: "%{facts.networking.domain}"
+profile::apache::reverse_proxy::servername: "%{facts.networking.domain}"

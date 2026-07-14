@@ -1,19 +1,24 @@
 # @summary Configure Apache as a reverse proxy.
 #
 # @example Basic usage.
-#   include profile::apache::reverse_proxy
+#   class { 'profile::apache::reverse_proxy':
+#     servername => 'host.local',
+#   }
 #
-class profile::apache::reverse_proxy {
-  $_servername = $facts['networking']['domain']
-
+# @param servername
+#   The servername to use for the virtual host.
+#
+class profile::apache::reverse_proxy (
+  Stdlib::Fqdn $servername,
+) {
   include profile::apache
   include apache::mod::rewrite
 
-  apache::vhost { "${_servername}-non-ssl":
-    servername      => $_servername,
+  apache::vhost { "${servername}-non-ssl":
+    servername      => $servername,
     port            => 80,
     docroot         => '/var/www/html/',
     redirect_status => 'permanent',
-    redirect_dest   => "https://${_servername}/",
+    redirect_dest   => "https://${servername}/",
   }
 }

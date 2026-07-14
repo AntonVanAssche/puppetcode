@@ -1,26 +1,31 @@
 # @summary: Install and configure Apache.
 #
 # @example Basic usage.
-#   include profile::apache
+#   class { 'profile::apache':
+#     servername => 'host.local',
+#   }
 #
-class profile::apache {
-  $_servername = $facts['networking']['domain']
-
-  openssl::certificate::x509 { $_servername:
+# @param servername
+#   The servername to use for the virtual host.
+#
+class profile::apache (
+  Stdlib::Fqdn $servername,
+) {
+  openssl::certificate::x509 { $servername:
     ensure     => present,
-    commonname => $_servername,
+    commonname => $servername,
   }
 
   class { 'apache':
     default_vhost                => false,
-    default_ssl_cert             => "/etc/ssl/certs/${_servername}.crt",
-    default_ssl_key              => "/etc/ssl/certs/${_servername}.key",
+    default_ssl_cert             => "/etc/ssl/certs/${servername}.crt",
+    default_ssl_key              => "/etc/ssl/certs/${servername}.key",
     default_ssl_reload_on_change => true,
     service_restart              => '/usr/bin/systemctl reload apache2.service', # graceful restart
     log_formats                  => {
       'default' => '%{X-Forwarded-For}i %l %u [%{%d/%b/%Y %T}t.%{msec_frac}t %{%z}t] \"%r\" %s %b %D \"%{Referer}i\" \"%{User-agent}i\"', # lint:ignore:140chars
     },
-    require                      => OpenSSL::Certificate::X509[$_servername],
+    require                      => OpenSSL::Certificate::X509[$servername],
   }
 
   $user  = $apache::user
