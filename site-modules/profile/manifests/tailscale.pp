@@ -24,7 +24,7 @@ class profile::tailscale (
   }
 
   package { 'tailscale':
-    ensure  => latest,
+    ensure  => present,
     require => Apt::Source['tailscale'],
   }
 
