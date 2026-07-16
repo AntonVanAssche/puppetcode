@@ -5,6 +5,6 @@
 #
 class profile::base::fail2ban {
   class { 'fail2ban':
-    package_ensure     => 'latest',
+    package_ensure => present,
   }
 }
