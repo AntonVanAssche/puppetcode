@@ -1,6 +1,6 @@
 [Unit]
 Description=Run Puppet Code Apply
-Wants=puppetcode-apply.timer
+Wants=puppetcode_apply.timer
 
 [Service]
 Type=oneshot

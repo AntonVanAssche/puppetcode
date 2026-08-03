@@ -1,6 +1,6 @@
 [Unit]
 Description=Run Puppet Code Upgrade
-Wants=puppetcode-upgrade.timer
+Wants=puppetcode_upgrade.timer
 
 [Service]
 Type=oneshot
