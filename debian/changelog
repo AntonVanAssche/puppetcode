@@ -1,3 +1,18 @@
+puppetcode (2.0.5-1) unstable; urgency=medium
+
+  * [mdadm] Add profile
+  * [tailscale] Ensure package is present
+  * [base] Ensure fail2ban is present
+  * [apache] Make servername a mandatory class parameter
+  * [transmission] Make servername a mandatory class parameter
+  * [grafana] Make servername a mandatory class parameter
+  * [wittimr] Make servername a mandatory class parameter
+  * [pihole] Make servername a mandatory class parameter
+  * [emby] Make servername a mandatory class parameter
+  * [base] Remove unused files
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 03 Aug 2026 17:23:00 +0000
+
 puppetcode (2.0.4-1) unstable; urgency=medium
 
   * [grafana] Upgrade to 13.1.0
