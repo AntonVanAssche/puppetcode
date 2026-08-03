@@ -1,3 +1,9 @@
+puppetcode (2.0.6-1) unstable; urgency=medium
+
+  * [packaging] Fix systemd timer references in services
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 03 Aug 2026 19:09:00 +0000
+
 puppetcode (2.0.5-1) unstable; urgency=medium
 
   * [mdadm] Add profile
