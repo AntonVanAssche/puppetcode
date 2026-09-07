@@ -46,6 +46,8 @@ profile::base::sudo::nopasswd_specs:
   - '%sudo ALL=(ALL) NOPASSWD: /usr/bin/systemctl reboot'
   - '%sudo ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload sshd'
   - "%{lookup('profile::base::users::user')} ALL=(ALL) NOPASSWD: /opt/puppetlabs/bin/puppet"
+  - "%{lookup('profile::base::users::user')} ALL=(ALL) NOPASSWD: /usr/bin/puppetcode.sh -a"
+  - "%{lookup('profile::base::users::user')} ALL=(ALL) NOPASSWD: /usr/bin/puppetcode.sh -u"
 
 profile::prometheus::scrape_configs:
   - job_name: 'node_exporter'
