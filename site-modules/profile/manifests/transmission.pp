@@ -1,30 +1,22 @@
 # @summary Set up Transmission BitTorrent client.
 #
-# Installs the Transmission BitTorrent client and sets
-# up a basic configuration.
-#
-# @param image
-#   Image to pull.
-# @param ports
-#   Ports to expose.
-# @param registry
-#   Registry to pull the image from.
-# @param volumes
-#   Volume mappings.
-#
 # @example Basic usage.
 #   include profile::transmission
 #
+# @param image
+#   Container image to run.
+# @param ports
+#   Ports to expose. Defaults to the Transmission web interface
+#   and peer port.
+#
 class profile::transmission (
-  String[1]            $image,
-  Hash[String, Tuple]  $ports,
-  String[1]            $registry,
-  Hash[String, String] $volumes,
+  String[1] $image = 'lscr.io/linuxserver/transmission',
+  Hash      $ports = { 'tcp' => ['9091', '51413'], 'udp' => ['51413'], },
 ) {
   include profile::podman
   include profile::apache::reverse_proxy_transmission
 
-  $user = 'transmission'
+  $user  = 'transmission'
   $group = 'transmission'
 
   group { $group:
@@ -37,13 +29,19 @@ class profile::transmission (
     system => true,
   }
 
-  $volumes.each |$k, $v| {
-    file { $v:
+  file {
+    default:
       ensure => directory,
       owner  => $user,
       group  => $group,
       mode   => '0755',
-    }
+    ;
+    '/var/lib/podman/volumes/configs/transmission/config':
+    ;
+    '/mnt/transmission/downloads':
+    ;
+    '/mnt/transmission/watch':
+    ;
   }
 
   systemd::unit_file { 'transmission.service':
@@ -56,13 +54,13 @@ class profile::transmission (
     content => template('profile/transmission/service.erb'),
   }
 
-  $ports.each |$k, $v| {
-    $v.each |$v| {
-      firewalld_port { "${k}_${v}":
+  $ports.each |$protocol, $port_list| {
+    $port_list.each |$port| {
+      firewalld_port { "${port}/${protocol}":
         ensure   => present,
         zone     => 'public',
-        port     => $v,
-        protocol => $k,
+        port     => $port,
+        protocol => $protocol,
       }
     }
   }

@@ -362,18 +362,6 @@ profile::prometheus::alertmanager::version: '0.33.1'
 profile::grafana::version: '13.1.0'
 profile::apache::reverse_proxy_grafana::servername: "grafana.%{facts.networking.domain}"
 
-profile::transmission::registry: 'lscr.io'
-profile::transmission::image: 'linuxserver/transmission'
-profile::transmission::volumes:
-  '/config': '/var/lib/podman/volumes/configs/transmission/config'
-  '/downloads': '/mnt/transmission/downloads'
-  '/watch': '/mnt/transmission/watch'
-profile::transmission::ports:
-  tcp:
-    - '9091'
-    - '51413'
-  udp:
-    - '51413'
 profile::apache::reverse_proxy_transmission::servername: "transmission.%{facts.networking.domain}"
 
 profile::apache::reverse_proxy_emby::servername: "emby.%{facts.networking.domain}"
