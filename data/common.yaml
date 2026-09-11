@@ -364,3 +364,10 @@ profile::prometheus::alerts:
           annotations:
             summary: Host requires reboot (instance {{ $labels.instance }})
             description: "{{ $labels.instance }} requires a reboot.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: 'UptimeTooHigh'
+          expr: 'time() - node_boot_time_seconds > (10 * 7 * 24 * 60 * 60)'
+          labels:
+            severity: 'warning'
+          annotations:
+            summary: 'Uptime higher than 10 weeks'
+            description: 'Uptime for {{ $labels.instance }} is {{ $value | humanizeDuration }}, does this node have the latest OS patches?'
