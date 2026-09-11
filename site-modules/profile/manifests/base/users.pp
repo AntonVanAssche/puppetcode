@@ -2,9 +2,14 @@
 #
 # @example Basic usage
 #   class { 'profile::base::users':
-#     group     => 'alice',
-#     user      => 'alice',
+#     group => 'alice',
+#     user  => 'alice',
 #   }
+#
+# @param group
+#   The name of the group to create.
+# @param user
+#   The name of the user to create.
 #
 class profile::base::users (
   String[1] $group,

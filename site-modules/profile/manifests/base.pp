@@ -17,10 +17,10 @@ class profile::base {
     default:
       ensure => 'running',
       enable => true,
-      ;
+    ;
     'puppetcode_apply.timer':
-      ;
+    ;
     'puppetcode_upgrade.timer':
-      ;
+    ;
   }
 }

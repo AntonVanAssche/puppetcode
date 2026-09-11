@@ -1,12 +1,12 @@
 # @summary Install default packages and set some package resource defaults.
 #
+# @example Install default packages.
+#   include profile::base
+#
 # @param install
 #   Array of packages that should be installed.
 # @param uninstall
 #   Array of packages that shouldn't be installed.
-#
-# @example Install default packages.
-#   include profile::base
 #
 class profile::base::packages (
   Array[String[1]]  $install    = [],
@@ -14,7 +14,7 @@ class profile::base::packages (
 ) {
   $install.each |$_package| {
     package { $_package:
-      ensure   => present,
+      ensure => present,
     }
   }
 
