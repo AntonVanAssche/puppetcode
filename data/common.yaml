@@ -9,6 +9,18 @@ lookup_options:
   profile::prometheus::alerts:
     merge: deep
 
+profile::apache::reverse_proxy::servername: "%{facts.networking.domain}"
+profile::apache::reverse_proxy_emby::servername: "emby.%{facts.networking.domain}"
+profile::apache::reverse_proxy_grafana::servername: "grafana.%{facts.networking.domain}"
+profile::apache::reverse_proxy_transmission::servername: "transmission.%{facts.networking.domain}"
+profile::apache::reverse_proxy_wittimr::servername: "%{facts.networking.domain}"
+profile::apache::servername: "%{facts.networking.domain}"
+
+profile::base::firewall::allowed_ports: []
+profile::base::firewall::allowed_services:
+  - 'ssh'
+  - 'http'
+  - 'https'
 profile::base::packages::install:
   - 'at'
   - 'bash-completion'
@@ -28,16 +40,6 @@ profile::base::packages::install:
   - 'unzip'
   - 'vim'
   - 'zip'
-
-profile::base::firewall::allowed_services:
-  - 'ssh'
-  - 'http'
-  - 'https'
-profile::base::firewall::allowed_ports: []
-
-profile::base::users::user: "%{facts.networking.hostname}"
-profile::base::users::group: "%{alias('profile::base::users::user')}"
-
 profile::base::sudo::base_specs:
   - '%sudo ALL=(ALL) ALL'
   - 'Defaults:sudo timestamp_timeout = 60'
@@ -48,6 +50,13 @@ profile::base::sudo::nopasswd_specs:
   - "%{lookup('profile::base::users::user')} ALL=(ALL) NOPASSWD: /opt/puppetlabs/bin/puppet"
   - "%{lookup('profile::base::users::user')} ALL=(ALL) NOPASSWD: /usr/bin/puppetcode.sh -a"
   - "%{lookup('profile::base::users::user')} ALL=(ALL) NOPASSWD: /usr/bin/puppetcode.sh -u"
+profile::base::users::group: "%{alias('profile::base::users::user')}"
+profile::base::users::user: "%{facts.networking.hostname}"
+
+profile::grafana::version: '13.1.0'
+profile::prometheus::alertmanager::version: '0.33.1'
+profile::prometheus::node_exporter::version: '1.12.0'
+profile::prometheus::version: '3.13.1'
 
 profile::prometheus::scrape_configs:
   - job_name: 'node_exporter'
@@ -355,18 +364,3 @@ profile::prometheus::alerts:
           annotations:
             summary: Host requires reboot (instance {{ $labels.instance }})
             description: "{{ $labels.instance }} requires a reboot.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
-profile::prometheus::version: '3.13.1'
-profile::prometheus::node_exporter::version: '1.12.0'
-profile::prometheus::alertmanager::version: '0.33.1'
-profile::grafana::version: '13.1.0'
-profile::apache::reverse_proxy_grafana::servername: "grafana.%{facts.networking.domain}"
-
-profile::apache::reverse_proxy_transmission::servername: "transmission.%{facts.networking.domain}"
-
-profile::apache::reverse_proxy_emby::servername: "emby.%{facts.networking.domain}"
-
-profile::apache::reverse_proxy_wittimr::servername: "%{facts.networking.domain}"
-
-profile::apache::servername: "%{facts.networking.domain}"
-profile::apache::reverse_proxy::servername: "%{facts.networking.domain}"
