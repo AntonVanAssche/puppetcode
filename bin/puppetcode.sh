@@ -66,9 +66,9 @@ EOF
     /usr/bin/curl -fsSL https://packagecloud.io/AntonVanAssche/puppetcode/gpgkey | \
         /usr/bin/gpg --dearmor > /etc/apt/keyrings/puppetcode-archive-keyring.gpg
     /usr/bin/curl -fsSL \
-        -o /tmp/openvox8-release-debian13.deb \
-        https://apt.voxpupuli.org/openvox8-release-debian13.deb
-    /usr/bin/apt install -y /tmp/openvox8-release-debian13.deb
+        -o /tmp/openvox9-release-debian13.deb \
+        https://apt.voxpupuli.org/openvox9-release-debian13.deb
+    /usr/bin/apt install -y /tmp/openvox9-release-debian13.deb
     /usr/bin/apt update
     /usr/bin/apt install -y puppetcode
 

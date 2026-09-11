@@ -1,3 +1,9 @@
+puppetcode (2.2.0-1) unstable; urgency=medium
+
+  * Upgrade to OpenVox 9
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 11 Sep 2026 22:08:00 +0000
+
 puppetcode (2.1.0-1) unstable; urgency=medium
 
   * [hiera] Clean-up and sort some data
