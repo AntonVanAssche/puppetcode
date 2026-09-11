@@ -374,6 +374,7 @@ profile::transmission::ports:
     - '51413'
   udp:
     - '51413'
+profile::apache::reverse_proxy_transmission::servername: "transmission.%{facts.networking.domain}"
 
 profile::emby::registry: 'docker.io'
 profile::emby::image: 'emby/embyserver_arm64v8'
