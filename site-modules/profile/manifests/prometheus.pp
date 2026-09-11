@@ -1,5 +1,10 @@
 # @summary Setup Prometheus server.
 #
+# @example Basic usage.
+#   class { 'profile::prometheus':
+#     version => '1.0.0',
+#   }
+#
 # @param version
 #   Version of Prometheus to install.
 # @param alerts
@@ -8,9 +13,6 @@
 #   Hostname of the Alertmanager server.
 # @param scrape_configs
 #   Configuration for scraping metrics.
-#
-# @example Basic usage.
-#   include profile::prometheus
 #
 class profile::prometheus (
   String[1] $version,
@@ -40,9 +42,9 @@ class profile::prometheus (
             'targets' => [
               "${alertmanager_host}:9093",
             ],
-          }
+          },
         ],
-      }
+      },
     ],
   }
 

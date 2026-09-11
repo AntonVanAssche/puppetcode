@@ -1,12 +1,14 @@
 # @summary Configure Prometheus Alertmanager.
 #
+# @example Basic usage.
+#   class { 'profile::prometheus::alertmanager':
+#     version => '1.0.0',
+#   }
+#
 # @param version
 #   Version of Alertmanager to install.
 # @param discord_webhook_url
 #   Discord webhook URL to send alerts to.
-#
-# @example Basic usage.
-#   include profile::prometheus::alertmanager
 #
 class profile::prometheus::alertmanager (
   String[1] $version,
@@ -23,7 +25,7 @@ class profile::prometheus::alertmanager (
   }
 
   $_receivers = {
-    'name' => 'discord',
+    'name'            => 'discord',
     'discord_configs' => [
       {
         'send_resolved' => true,

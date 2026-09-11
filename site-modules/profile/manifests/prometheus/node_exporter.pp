@@ -1,10 +1,12 @@
 # @summary Install Prometheus Node Exporter.
 #
+# @example Basic usage.
+#   class { 'profile::prometheus::node_exporter':
+#     version => '1.0.0',
+#   }
+#
 # @param version
 #   Version of Node Exporter to install.
-#
-# @example Basic usage.
-#   include profile::prometheus::node_exporter
 #
 class profile::prometheus::node_exporter (
   String[1] $version
