@@ -54,11 +54,11 @@ class profile::emby (
       owner  => $user,
       group  => $group,
       mode   => '0755',
-      ;
+    ;
     '/mnt/emby':
-      ;
+    ;
     '/mnt/emby/media':
-      ;
+    ;
   }
 
   systemd::unit_file { 'emby.service':
