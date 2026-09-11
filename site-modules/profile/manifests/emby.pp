@@ -2,31 +2,22 @@
 #
 # Install and configure the Emby media server.
 #
-# @param image
-#   Image to pull.
-# @param port
-#   Port to expose.
-# @param protocol
-#   TCP or UDP.
-# @param registry
-#   Registry to pull the image from.
-# @param volumes
-#   Volume mappings.
-#
 # @example Basic usage.
 #   include profile::emby
 #
+# @param image
+#   Container image to run.
+# @param port
+#   The port to expose Emby on.
+#
 class profile::emby (
-  String[1]            $image,
-  String[1]            $port,
-  String[1]            $protocol,
-  String[1]            $registry,
-  Hash[String, String] $volumes,
+  String[1]    $image = 'docker.io/emby/embyserver_arm64v8',
+  Stdlib::Port $port  = 8096,
 ) {
   include profile::podman
   include profile::apache::reverse_proxy_emby
 
-  $user = 'emby'
+  $user  = 'emby'
   $group = 'emby'
 
   group { $group:
@@ -37,15 +28,6 @@ class profile::emby (
   user { $user:
     ensure => present,
     system => true,
-  }
-
-  $volumes.each |$k, $v| {
-    file { $v:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
-    }
   }
 
   file {
@@ -59,6 +41,12 @@ class profile::emby (
     ;
     '/mnt/emby/media':
     ;
+    '/var/lib/podman/volumes/configs/emby/config':
+    ;
+    '/mnt/emby/media/films':
+    ;
+    '/mnt/emby/media/series':
+    ;
   }
 
   systemd::unit_file { 'emby.service':
@@ -71,10 +59,10 @@ class profile::emby (
     content => template('profile/emby/service.erb'),
   }
 
-  firewalld_port { $port:
+  firewalld_port { "${port}/tcp":
     ensure   => present,
     zone     => 'public',
     port     => $port,
-    protocol => $protocol,
+    protocol => 'tcp',
   }
 }

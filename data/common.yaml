@@ -376,14 +376,6 @@ profile::transmission::ports:
     - '51413'
 profile::apache::reverse_proxy_transmission::servername: "transmission.%{facts.networking.domain}"
 
-profile::emby::registry: 'docker.io'
-profile::emby::image: 'emby/embyserver_arm64v8'
-profile::emby::volumes:
-  '/config': '/var/lib/podman/volumes/configs/emby/config'
-  '/media/films': '/mnt/emby/media/films'
-  '/media/series': '/mnt/emby/media/series'
-profile::emby::port: '8096'
-profile::emby::protocol: 'tcp'
 profile::apache::reverse_proxy_emby::servername: "emby.%{facts.networking.domain}"
 
 profile::pihole::registry: 'docker.io'
