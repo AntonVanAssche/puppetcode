@@ -1,3 +1,16 @@
+puppetcode (2.1.0-1) unstable; urgency=medium
+
+  * [hiera] Clean-up and sort some data
+  * [transmission] Simplify profile
+  * [pihole] Simplify profile
+  * [emby] Simplify profile
+  * [transmission] Set mandatory servername param
+  * [prometheus] Fix some linting warnings
+  * [base] Fix some liniting warnings
+  * [emby] Fix some linting warnings
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 11 Sep 2026 21:48:00 +0000
+
 puppetcode (2.0.8-1) unstable; urgency=medium
 
   * [base] Allow executing puppetcode.sh without sudo password
