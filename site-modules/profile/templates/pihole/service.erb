@@ -1,5 +1,5 @@
 [Unit]
-Description=Pihole
+Description=Pi-hole
 Wants=network.target
 After=network-online.target
 
@@ -7,7 +7,9 @@ After=network-online.target
 Environment=PODMAN_SYSTEMD_UNIT=%n
 Restart=on-failure
 TimeoutStopSec=70
+
 ExecStartPre=/bin/rm -f %t/container-pihole.pid %t/container-pihole.ctr-id
+
 ExecStart=/usr/bin/podman run \
   --conmon-pidfile %t/container-pihole.pid \
   --cidfile %t/container-pihole.ctr-id \
@@ -24,15 +26,16 @@ ExecStart=/usr/bin/podman run \
   --env FTLCONF_dns_dnssec=true \
   --env FTLCONF_dns_listeningMode=all \
   --env TZ=Europe/Brussels \
-<% scope.lookupvar('profile::pihole::volumes').each do |container_path, host_path| -%>
-  --volume=<%= host_path %>:<%= container_path %>:Z \
-<% end -%>
-  --publish 53:53/tcp \
-  --publish 53:53/udp \
-  --publish 80:80/tcp \
-  <%= scope.lookupvar('profile::pihole::registry') %>/<%= scope.lookupvar('profile::pihole::image') %>
+  --volume=/var/lib/podman/volumes/configs/pihole:/etc/pihole:Z \
+  --volume=/var/lib/podman/volumes/configs/dnsmasq.d:/etc/dnsmasq.d:Z \
+  --publish=53:53/tcp \
+  --publish=53:53/udp \
+  --publish=80:80/tcp \
+  docker.io/pihole/pihole
+
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-pihole.ctr-id -t 10
 ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-pihole.ctr-id
+
 PIDFile=%t/container-pihole.pid
 Type=forking
 

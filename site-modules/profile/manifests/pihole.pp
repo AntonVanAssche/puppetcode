@@ -1,22 +1,15 @@
-# @summary Installs and configures Pi-hole
-#
-# @param image
-#   Image to pull.
-# @param password
-#   Password for the Pi-hole web interface.
-# @param registry
-#   Registry to pull the image from.
-# @param volumes
-#   Volume mappings.
+# @summary Installs and configures Pi-hole.
 #
 # @example Basic usage.
-#   include profile::pihole
+#   class { 'profile::pihole':
+#     password => 'mysecret',
+#   }
+#
+# @param password
+#   Password for the Pi-hole web interface.
 #
 class profile::pihole (
-  String[1]            $image,
-  String[1]            $password,
-  String[1]            $registry,
-  Hash[String, String] $volumes,
+  String[1] $password,
 ) {
   include profile::podman
 
@@ -24,7 +17,7 @@ class profile::pihole (
   $group = 'pihole'
 
   group { $group:
-    ensure => 'present',
+    ensure => present,
     system => true,
   }
 
@@ -48,14 +41,17 @@ class profile::pihole (
     notify => Service['systemd-resolved'],
   }
 
-  $volumes.each |$k, $v| {
-    file { $v:
+  file {
+    default:
       ensure => directory,
       owner  => $user,
-      group  => $user,
+      group  => $group,
       mode   => '0755',
-      before => Systemd::Unit_file['pihole.service'],
-    }
+    ;
+    '/var/lib/podman/volumes/configs/pihole':
+    ;
+    '/var/lib/podman/volumes/configs/dnsmasq.d':
+    ;
   }
 
   service { 'systemd-resolved':

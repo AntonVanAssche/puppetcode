@@ -378,12 +378,6 @@ profile::apache::reverse_proxy_transmission::servername: "transmission.%{facts.n
 
 profile::apache::reverse_proxy_emby::servername: "emby.%{facts.networking.domain}"
 
-profile::pihole::registry: 'docker.io'
-profile::pihole::image: 'pihole/pihole'
-profile::pihole::volumes:
-  '/etc/pihole': '/var/lib/podman/volumes/configs/pihole'
-  '/etc/dnsmasq.d': '/var/lib/podman/volumes/configs/dnsmasq.d'
-
 profile::apache::reverse_proxy_wittimr::servername: "%{facts.networking.domain}"
 
 profile::apache::servername: "%{facts.networking.domain}"
