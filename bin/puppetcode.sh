@@ -22,6 +22,7 @@ OPTIONS:
     -e  Enable the Puppet code systemd timer
     -h  Show this help message.
     -i  Install the Puppet code and dependencies.
+    -m  Install the Puppet modules using r10k.
     -u  Upgrade the Puppet code.
 EOF
 }
@@ -43,6 +44,15 @@ upgrade() {
     /usr/bin/apt update
     /usr/bin/apt --only-upgrade install puppetcode
 
+    [[ -x "${R10K_BIN}" ]] || \
+        { echo "R10k is not installed or not in PATH." >&2; exit 1; }
+
+    ${R10K_BIN} puppetfile install \
+        --moduledir "${PUPPET_CODE}/modules" \
+        --puppetfile "${PUPPET_CODE}/Puppetfile"
+}
+
+install_modules() {
     [[ -x "${R10K_BIN}" ]] || \
         { echo "R10k is not installed or not in PATH." >&2; exit 1; }
 
@@ -73,12 +83,8 @@ EOF
     /usr/bin/apt install -y puppetcode
 
     /opt/puppetlabs/puppet/bin/gem install r10k
-    [[ -x "${R10K_BIN}" ]] || \
-        { echo "R10k is not installed or not in PATH." >&2; exit 1; }
 
-    ${R10K_BIN} puppetfile install \
-        --moduledir "${PUPPET_CODE}/modules" \
-        --puppetfile "${PUPPET_CODE}/Puppetfile"
+    install_modules
 }
 
 disable() {
@@ -91,7 +97,7 @@ enable() {
     /usr/bin/systemctl status --no-pager puppetcode_apply.timer
 }
 
-while getopts ":adehiu" opt; do
+while getopts ":adehimu" opt; do
     case ${opt} in
         a)
             apply;;
@@ -103,6 +109,8 @@ while getopts ":adehiu" opt; do
             usage;;
         i)
             install;;
+        m)
+            install_modules;;
         u)
             upgrade;;
         \?)

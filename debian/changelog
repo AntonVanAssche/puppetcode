@@ -1,3 +1,9 @@
+puppetcode (2.4.0-1) unstable; urgency=medium
+
+  * [puppetcode.sh] Add option to install Puppet the modules
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 14 Sep 2026 17:27:00 +0000
+
 puppetcode (2.3.0-1) unstable; urgency=medium
 
   * [alertmanager] Add UptimeTooHigh alert
