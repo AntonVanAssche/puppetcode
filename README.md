@@ -1,23 +1,39 @@
 # Puppetcode
 
-This is a personal homelab project utilizing two Raspberry Pi 4B devices (
-Homer and Marge), both running Debian Trixie. The infrastructure is mostly
-managed with OpenVox, automating the setup and configuration of services.
+Personal homelab infrastructure managed with OpenVox.
 
-## Key Features
+The repository contains the Puppet/OpenVox code, configuration files, scripts, and Debian packaging used to configure my two Raspberry Pi 4B servers:
 
-- **Homer**: A media streaming and monitoring server with Emby, Transmission
-  for torrenting, and Grafana for performance monitoring using Prometheus
-  and Node Exporter.
-- **Marge**: A Network-Attached Storage (NAS) solution with Samba for file
-  sharing, Pihole + Unbound for ad-blocking, and Tailscale for secure remote
-  access.
-  - **RAID 5 Array**: Powered by four SATA HDDs, managed via a Raxda Rock Pi
-    SATA HAT.
+- **Homer**: media and monitoring server
+- **Marge**: NAS and network services
+
+The main entrypoint is `puppetcode.sh`:
+
+```console
+$ puppetcode.sh -h
+Usage: puppetcode.sh [OPTIONS]
+
+OPTIONS:
+    -a  Apply the Puppet manifest.
+    -d  Disable the Puppet code systemd timer
+    -e  Enable the Puppet code systemd timer
+    -h  Show this help message.
+    -i  Install the Puppet code and dependencies.
+    -m  Install the Puppet modules using r10k.
+    -u  Upgrade the Puppet code.
+```
+
+## Setup
+
+```console
+# wget https://raw.githubusercontent.com/AntonVanAssche/puppetcode/refs/heads/master/bin/puppetcode.sh
+# chmod +x puppetcode.sh
+# ./puppetcode.sh -i
+```
 
 ### RAID 5 Array Setup (Marge)
 
-#### 1. **Create a New RAID 5 Array**
+#### Create a New RAID 5 Array
 
 ```console
 # mdadm --create --verbose /dev/md0 \
@@ -29,24 +45,11 @@ managed with OpenVox, automating the setup and configuration of services.
 # mdadm --detail /dev/md0
 ```
 
-#### 2. **Assemble an Existing RAID 5 Array**
+#### Assemble an Existing RAID 5 Array
 
 ```console
 # mdadm --assemble --scan --verbose
-# mdadm --detail --scan | tee /etc/mdadm.conf
+# mdadm --detail --scan | tee /etc/mdadm/mdadm.conf
 # update-initramfs -u
 # mdadm --detail /dev/md0
 ```
-
-## Installation & Setup
-
-> :warning: Do not apply this code without understanding what it does. It is
-> intended for personal use and may not be suitable for your environment.
-
-```console
-# wget https://raw.githubusercontent.com/AntonVanAssche/puppetcode/refs/heads/master/bin/puppetcode.sh
-# chmod +x puppetcode.sh
-# ./puppetcode.sh -i
-```
-
-This will install OpenVox, necessary dependencies, and the deb package of this repo.
