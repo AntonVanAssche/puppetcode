@@ -13,11 +13,15 @@
 # @param cnames
 #   Hash of CNAME records to create.
 #   The hash key is the alias (CNAME) and the value is the canonical hostname it points to.
+# @param upstreams
+#   List of upstream DNS servers to use.
+#   127.0.0.1#53 is always included as the first upstream.
 #
 class profile::pihole (
   String[1] $password,
   Hash[String[1], Stdlib::IP::Address::V4] $a_records = {},
   Hash[String[1], String[1]] $cnames = {},
+  Array[Stdlib::IP::Address::V4] $upstreams = ['9.9.9.9', '149.112.112.112'],
 ) {
   include profile::podman
 

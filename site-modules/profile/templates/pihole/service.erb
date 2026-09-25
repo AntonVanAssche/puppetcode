@@ -22,7 +22,7 @@ ExecStart=/usr/bin/podman run \
   --env VIRTUAL_HOST=<%= scope.lookupvar('facts')['networking']['fqdn'] %> \
   --env DNSMASQ_LISTENING=all \
   --env FTLCONF_webserver_api_password=<%= scope.lookupvar('profile::pihole::password') %> \
-  --env FTLCONF_dns_upstreams="127.0.0.1#5053;9.9.9.9;149.112.112.112" \
+  --env FTLCONF_dns_upstreams="127.0.0.1#53;<%= scope.lookupvar('profile::pihole::upstreams').join(';') %>" \
   --env FTLCONF_dns_dnssec=true \
   --env FTLCONF_dns_listeningMode=all \
 <% if scope.lookupvar('profile::pihole::a_records').any? -%>
