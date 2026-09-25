@@ -53,6 +53,12 @@ profile::base::sudo::nopasswd_specs:
 profile::base::users::group: "%{alias('profile::base::users::user')}"
 profile::base::users::user: "%{facts.networking.hostname}"
 
+profile::pihole::cnames:
+  emby.enornmous.co.ck: enormous.co.ck
+  grafana.enornmous.co.ck: enormous.co.ck
+  pihole.enornmous.co.ck: enormous.co.ck
+  transmission.enornmous.co.ck: enormous.co.ck
+
 profile::grafana::version: '13.1.0'
 profile::prometheus::alertmanager::version: '0.33.1'
 profile::prometheus::node_exporter::version: '1.12.0'

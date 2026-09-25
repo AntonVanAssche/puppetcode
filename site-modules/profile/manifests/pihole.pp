@@ -7,9 +7,17 @@
 #
 # @param password
 #   Password for the Pi-hole web interface.
+# @param a_records
+#   Hash of IPv4 A records to create.
+#   The hash key is the hostname and the value is its IPv4 address.
+# @param cnames
+#   Hash of CNAME records to create.
+#   The hash key is the alias (CNAME) and the value is the canonical hostname it points to.
 #
 class profile::pihole (
   String[1] $password,
+  Hash[String[1], Stdlib::IP::Address::V4] $a_records = {},
+  Hash[String[1], String[1]] $cnames = {},
 ) {
   include profile::podman
 

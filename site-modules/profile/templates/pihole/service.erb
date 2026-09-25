@@ -25,6 +25,12 @@ ExecStart=/usr/bin/podman run \
   --env FTLCONF_dns_upstreams="127.0.0.1#5053;9.9.9.9;149.112.112.112" \
   --env FTLCONF_dns_dnssec=true \
   --env FTLCONF_dns_listeningMode=all \
+<% if scope.lookupvar('profile::pihole::a_records').any? -%>
+  --env FTLCONF_dns_hosts="<%= scope.lookupvar('profile::pihole::a_records').map { |domain, ip| "#{ip} #{domain}" }.join(';') %>" \
+<% end -%>
+<% if scope.lookupvar('profile::pihole::cnames').any? -%>
+  --env FTLCONF_dns_cnameRecords="<%= scope.lookupvar('profile::pihole::cnames').map { |alias_name, canonical| "#{alias_name}, #{canonical}" }.join(';') %>" \
+<% end -%>
   --env TZ=Europe/Brussels \
   --volume=/var/lib/podman/volumes/configs/pihole:/etc/pihole:Z \
   --volume=/var/lib/podman/volumes/configs/dnsmasq.d:/etc/dnsmasq.d:Z \
