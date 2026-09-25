@@ -1,3 +1,10 @@
+puppetcode (2.5.0-1) unstable; urgency=medium
+
+  * [pihole] Add parameter to configure upstream DNS servers HEAD -> master
+  * [pihole] Add parameters to configure custom DNS records
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 25 Sep 2026 23:26:00 +0000
+
 puppetcode (2.4.0-1) unstable; urgency=medium
 
   * [puppetcode.sh] Add option to install Puppet the modules
