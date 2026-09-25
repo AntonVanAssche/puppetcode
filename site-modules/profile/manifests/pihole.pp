@@ -19,8 +19,8 @@
 #
 class profile::pihole (
   String[1] $password,
-  Hash[String[1], Stdlib::IP::Address::V4] $a_records = {},
-  Hash[String[1], String[1]] $cnames = {},
+  Hash[Stdlib::Fqdn, Stdlib::IP::Address::V4] $a_records = {},
+  Hash[Stdlib::Fqdn, Stdlib::Fqdn] $cnames = {},
   Array[Stdlib::IP::Address::V4] $upstreams = ['9.9.9.9', '149.112.112.112'],
 ) {
   include profile::podman

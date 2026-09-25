@@ -1,3 +1,9 @@
+puppetcode (2.5.1-1) unstable; urgency=medium
+
+  * [pihole] Ensure key-values are of type Stdlib::Fqdn
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 25 Sep 2026 23:33:00 +0000
+
 puppetcode (2.5.0-1) unstable; urgency=medium
 
   * [pihole] Add parameter to configure upstream DNS servers HEAD -> master
