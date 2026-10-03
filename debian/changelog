@@ -1,3 +1,9 @@
+puppetcode (2.5.2-1) unstable; urgency=medium
+
+  * [pihole] Fix typos in CNAMEs
+
+ -- Anton Van Assche <vanasscheanton@gmail.com> Mon, 03 Oct 2026 19:49:00 +0000
+
 puppetcode (2.5.1-1) unstable; urgency=medium
 
   * [pihole] Ensure key-values are of type Stdlib::Fqdn
